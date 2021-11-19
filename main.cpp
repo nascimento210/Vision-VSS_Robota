@@ -10,7 +10,7 @@ int main()
 	// cvui
 	cv::Mat frame = cv::Mat(900, 1300, CV_8UC3);
 	cv::Mat display1;
-	cv::Mat display2 = cv::Mat(520, 600, CV_8U, cv::Scalar(0, 0, 0));
+	cv::Mat display2;
 	
 	int colorCount = 0;
 	std::vector<std::string> cores = { "Amarelo","Azul", "Vermelho", "Verde", "Rosa" };
@@ -26,9 +26,6 @@ int main()
 	int mouse_count = 0;
 	int cornerx[4] = {0};
 	int cornery[4] = {0};
-	//cv::Mat_<float> dst = (cv::Mat_<float>(4, 2) <<
-	//	0, 0, 600, 0,
-	//	0, 520, 600, 520);
 	std::vector<cv::Point> dst = {{0, 0}, {600, 0},
 		{0, 520}, {600, 520}};
 	bool applyPerspective = false;
@@ -110,10 +107,15 @@ int main()
 				centers(contorno[i], colorpose.at(i));
 				cv::drawContours(display1, contorno[i], -1, (255, 255, 255), 3);
 			}
-			robotPose(teamblu, colorpose);
-			tim = colorMask.at(colorCount);
-			display2 = tim.clone();
-			cv::imshow("teste", display2);
+			robotPose(teamblu, colorpose); 
+			display2 = colorMask.at(colorCount).clone();
+			//cvui::imshow("teste", display2);
+			for(int x = 0; x<2; ++x){
+				for (cv::Point y : teamblu.at(x)){
+					cv::circle(display1, y, 10, (255,255,255));
+				}
+
+			}
 
 		}
 		
@@ -121,7 +123,6 @@ int main()
 		int py = display1.rows;
 		int px = display1.cols;
 		int status = cvui::iarea(10, 20, px, py);
-		 // ficar fora do switch pra funcionar!!!! não sei pq
 
 		// first row
 		cvui::beginRow(frame, 10, 20, -1, py, 10);

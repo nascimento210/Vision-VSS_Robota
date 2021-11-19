@@ -69,7 +69,7 @@ void centers(std::vector<std::vector<cv::Point>>& contorno, std::vector<cv::Poin
 	std::vector<cv::Moments> mu(contorno.size());
 	for (int i = 0; i < contorno.size(); ++i) {
 		mu[i] = cv::moments(contorno[i], false);
-		poseColor.push_back(cv::Point(mu[i].m10 / mu[i].m00, mu[i].m01 / mu[i].m00));
+		poseColor.push_back(cv::Point(int(mu[i].m10 / mu[i].m00), int(mu[i].m01 / mu[i].m00)));
 	}
 }
 
